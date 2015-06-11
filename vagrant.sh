@@ -13,6 +13,9 @@ export PATH=~/.cabal/bin:/opt/cabal/1.20/bin:/opt/ghc/7.8.4/bin:$PATH
 EOF
 export PATH=~/.cabal/bin:/opt/cabal/1.20/bin:/opt/ghc/7.8.4/bin:$PATH
 
+# Additional required libraries
+sudo apt-get install zlib1g-dev
+
 # Required Cabal binaries
 cabal update
-cabal install alex happy
+cabal install alex happy yesod-bin
