@@ -23,11 +23,11 @@ cabal update
 cabal install alex happy yesod-bin
 
 # Set up Postgres
-mkfifo sql
-cat <<'EOF' > sql
+mkfifo /tmp/haskell_in_vagrant.sql
+cat <<'EOF' > /tmp/haskell_in_vagrant.sql
 CREATE USER vagrant WITH PASSWORD 'vagrant';
 CREATE DATABASE vagrant;
 GRANT ALL PRIVILEGES ON DATABASE vagrant TO vagrant;
 \q
 EOF
-sudo -u postgres psql -f sql
+sudo -u postgres psql -f /tmp/haskell_in_vagrant.sql
