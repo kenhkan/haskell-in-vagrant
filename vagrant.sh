@@ -23,11 +23,17 @@ cabal update
 cabal install alex happy yesod-bin
 
 # Set up Postgres
-mkfifo /tmp/haskell_in_vagrant.sql
-cat <<'EOF' > /tmp/haskell_in_vagrant.sql
+TEMP_FILE=haskell_in_vagrant_setup.sql
+cat <<'EOF' > $TEMP_FILE
 CREATE USER vagrant WITH PASSWORD 'vagrant';
 CREATE DATABASE vagrant;
 GRANT ALL PRIVILEGES ON DATABASE vagrant TO vagrant;
 \q
 EOF
-sudo -u postgres psql -f /tmp/haskell_in_vagrant.sql
+sudo -u postgres psql -f $TEMP_FILE
+rm $TEMP_FILE
+
+# Set up Yesod project
+cd /vagrant
+cabal sandbox init
+cabal install
