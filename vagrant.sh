@@ -15,7 +15,19 @@ export PATH=~/.cabal/bin:/opt/cabal/1.20/bin:/opt/ghc/7.8.4/bin:$PATH
 
 # Additional required libraries
 sudo apt-get install zlib1g-dev
+sudo apt-get install postgresql
+sudo apt-get install libpq-dev
 
 # Required Cabal binaries
 cabal update
 cabal install alex happy yesod-bin
+
+# Set up Postgres
+mkfifo sql
+cat <<'EOF' > sql
+CREATE USER vagrant WITH PASSWORD 'vagrant';
+CREATE DATABASE vagrant;
+GRANT ALL PRIVILEGES ON DATABASE vagrant TO vagrant;
+\q
+EOF
+sudo -u postgres psql -f sql
